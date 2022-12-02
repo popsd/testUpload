@@ -1,0 +1,9 @@
+DeviceInfo
+| where Timestamp > ago(1d)
+| where OnboardingStatus != "Onboarded"
+| summarize by DeviceId
+| join kind=inner (
+    DeviceInfo
+    | where Timestamp > ago(1d)
+) on DeviceId
+| take 10
